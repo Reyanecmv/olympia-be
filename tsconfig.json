@@ -1,0 +1,25 @@
+{
+  "extends": "fastify-tsconfig",
+  "compilerOptions": {
+    "outDir": "dist",
+    "sourceMap": true,
+    "declaration": true,
+    "strict": true,
+    "module": "NodeNext",
+    "target": "ESNext",
+    "typeRoots": ["node_modules/@types", "types/*.d.ts", "src/**/*.d.ts"],
+    "rootDir": "./",
+    "baseUrl": "./",
+    "paths": {
+      "@app-types/*": ["types/*"],
+      "@controllers/*": ["src/controllers/*"],
+      "@services/*": ["src/services/*"],
+      "@validators/*": ["src/validators/*"],
+      "@actions/*": ["src/actions/*"],
+      "@utils/*": ["src/utils/*"],
+      "@config/*": ["src/config/*"],
+      "@middlewares/*": ["src/middlewares/*"]
+    }
+  },
+  "include": ["scripts/**/*", "types/**/*", "src/**/*", "tests/**/*"]
+}
