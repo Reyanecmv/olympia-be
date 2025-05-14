@@ -6,6 +6,7 @@ import fp from "fastify-plugin";
 import * as fs from "fs";
 import { fileURLToPath } from "node:url";
 import * as path from "path";
+import * as console from "node:console";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,6 +18,7 @@ async function registerServices(fastify: FastifyInstance) {
   const registrations: Record<string, any> = {};
 
   for (const file of fs.readdirSync(servicesDir)) {
+    console.log(file, "AICIIII")
     if (file.startsWith("base") || !file.endsWith(".service.ts") || !file.endsWith(".service.js")) continue;
 
     const modulePath = path.join(servicesDir, file);
