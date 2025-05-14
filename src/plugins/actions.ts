@@ -5,7 +5,7 @@ import { readdir } from "fs/promises";
 import { join, parse } from "path";
 import { Action, globalActionTypes } from "@app-types/app.js";
 
-const actionsPath = join(process.cwd(), "disc/src/actions");
+const actionsPath = join(process.cwd(), "dist/src/actions");
 const actions = new Map<string, Resolver<Action>>();
 
 function createActionResolver<T extends Action>(
