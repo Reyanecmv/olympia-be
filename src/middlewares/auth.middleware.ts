@@ -6,6 +6,7 @@ export const authMiddleware = async (
 ) => {
   try {
     const passcode = request.headers['PASSCODE'];
+    console.log(request.headers)
     if(passcode === process.env.PASSCODE){
       request.userId = request.headers['userId'] as string
     }
