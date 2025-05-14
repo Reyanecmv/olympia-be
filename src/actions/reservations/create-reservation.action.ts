@@ -88,6 +88,7 @@ export default class CreateReservationAction
 
     const xmlString = this.jsonToXml(jsonObj);
     console.log(xmlString, "xmlString");
+    console.log(axiosConfig.baseURL, "baseURL");
     try {
       const response = await this.axios.post(axiosConfig.baseURL, xmlString, {
         headers: {
@@ -117,6 +118,7 @@ export default class CreateReservationAction
         message: "Reservation created successfully",
       };
     } catch (error) {
+      console.error("Error creating reservation:", error);
       return {
         reservationId: reservationId.toString(),
         success: false,
