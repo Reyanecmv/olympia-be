@@ -17,7 +17,7 @@ async function registerServices(fastify: FastifyInstance) {
   const registrations: Record<string, any> = {};
 
   for (const file of fs.readdirSync(servicesDir)) {
-    if (file.startsWith("base") || !file.endsWith(".service.js")) continue;
+    if (file.startsWith("base") || !file.endsWith(".service.ts")) continue;
 
     const modulePath = path.join(servicesDir, file);
     const serviceModule = await import(modulePath);
