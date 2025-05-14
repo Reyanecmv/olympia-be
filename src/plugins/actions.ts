@@ -23,6 +23,7 @@ async function loadActionsRecursively(
   dir: string,
 ): Promise<void> {
   const entries = await readdir(dir, { withFileTypes: true });
+  console.log("entries", entries);
   const actionPromises = entries.map(async (entry) => {
     const fullPath = join(dir, entry.name);
     console.log('fullPath', fullPath);
