@@ -18,7 +18,10 @@ export default fp<FastifySwaggerUiOptions>(
         },
       },
       staticCSP: true,
-      transformStaticCSP: (header) => header,
+      transformStaticCSP: (header) => {
+        // Remove the upgrade-insecure-requests directive
+        return header.replace(/;\s*upgrade-insecure-requests/i, '');
+      },
       transformSpecification: (swaggerObject, request, reply) => {
         return swaggerObject;
       },
