@@ -5,7 +5,7 @@ export const authMiddleware = async (
   reply: FastifyReply,
 ) => {
   try {
-    const passcode = request.headers['passCode'];
+    const passcode = request.headers['PASSCODE'];
     if(passcode === process.env.PASSCODE){
       request.userId = request.headers['userId'] as string
     }
