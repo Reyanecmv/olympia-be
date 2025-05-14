@@ -69,7 +69,7 @@ export default class GetReservationAction extends BaseAction implements Action {
         reservationId,
         success: false,
         message:
-          "Unable to create reservation due to a system error. Please try again later.",
+          `Unable to create reservation due to a system error. Please try again later. ${error}`,
       };
     }
   }

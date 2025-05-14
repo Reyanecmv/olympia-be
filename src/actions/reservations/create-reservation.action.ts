@@ -121,7 +121,7 @@ export default class CreateReservationAction
         reservationId: reservationId.toString(),
         success: false,
         message:
-          "Unable to create reservation due to a system error. Please try again later.",
+            `Unable to create reservation due to a system error. Please try again later. ${error}`,
       };
     }
   }
