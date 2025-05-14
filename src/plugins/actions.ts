@@ -31,7 +31,7 @@ async function loadActionsRecursively(
     }
 
     console.log(entry.name)
-    if (entry.name.startsWith("base") || !entry.name.endsWith(".action.js"))
+    if (entry.name.startsWith("base") || !entry.name.endsWith(".action.ts"))
       return;
 
     try {
