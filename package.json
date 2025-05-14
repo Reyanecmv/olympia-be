@@ -9,7 +9,7 @@
     "test": "test"
   },
   "scripts": {
-    "build": "rm -rf ./dist && tsc && resolve-tspaths -p tsconfig.json -o ./dist",
+    "build": "rm -rf ./dist && tsc -p tsconfig.build.json && resolve-tspaths -p tsconfig.build.json -o ./dist",
     "dev": "nodemon --ext ts --exec tsx src/app.ts | pino-pretty --colorize",
     "migrate": "prisma migrate dev",
     "migrate:reset": "prisma migrate reset",

@@ -1,8 +1,21 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext",
+    "baseUrl": "./",
+    "paths": {
+      "@app-types/*": ["types/*"],
+      "@controllers/*": ["src/controllers/*"],
+      "@services/*": ["src/services/*"],
+      "@validators/*": ["src/validators/*"],
+      "@actions/*": ["src/actions/*"],
+      "@utils/*": ["src/utils/*"],
+      "@config/*": ["src/config/*"],
+      "@middlewares/*": ["src/middlewares/*"]
+    }
   },
-  "include": ["src"],
+  "include": ["src", "types"],
   "exclude": ["tests", "**/*.spec.ts"]
 }
