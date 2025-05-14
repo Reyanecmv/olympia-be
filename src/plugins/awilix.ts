@@ -18,7 +18,7 @@ async function registerServices(fastify: FastifyInstance) {
   const registrations: Record<string, any> = {};
   for (const file of fs.readdirSync(servicesDir)) {
     console.log(file, "file");
-    if (file.startsWith("base") || !file.endsWith(".service.ts")) continue;
+    if (file.startsWith("base") || !file.endsWith(".service.js")) continue;
 
     const modulePath = path.join(servicesDir, file);
     const serviceModule = await import(modulePath);
@@ -31,7 +31,7 @@ async function registerServices(fastify: FastifyInstance) {
 
       const serviceName = `${serviceClass.name.charAt(0).toLowerCase()}${serviceClass.name.slice(1)}`;
       registrations[serviceName] = asClass(serviceClass).singleton();
-      console.log(`##### service class: ${serviceClass} / service name: ${serviceName}`);
+      console.log(`##### service name: ${serviceName}`);
     }
     fastify.diContainer.register(registrations);
   }
