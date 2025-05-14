@@ -89,7 +89,7 @@ export default class CreateReservationAction
     const xmlString = this.jsonToXml(jsonObj);
     console.log(xmlString, "xmlString");
     try {
-      const response = await this.axios.post(``, xmlString, {
+      const response = await this.axios.post((process.env.ABACUS_BASE_URL as string), xmlString, {
         headers: {
           "Content-Type": "text/xml; charset=utf-8",
           SOAPAction: `"http://www.designa.de/insertPrebookingDataV31"`,
