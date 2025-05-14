@@ -28,6 +28,7 @@ async function registerServices(fastify: FastifyInstance) {
 
     if (serviceClass) {
       const serviceName = `${serviceClass.name.charAt(0).toLowerCase()}${serviceClass.name.slice(1)}`;
+      console.log(serviceName, serviceClass, "AICIIII")
       registrations[serviceName] = asClass(serviceClass).singleton();
     }
 
