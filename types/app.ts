@@ -1,6 +1,6 @@
 import { AutoloadPluginOptions } from "@fastify/autoload";
 import type { UserService } from "@services/user.service.js";
-import type { ReservationService } from "@services/reservation.service.js";
+import type { ReservationService } from "@services/reservation.service.ts";
 import { FastifyServerOptions } from "fastify";
 import type { PrismaClient } from "@prisma/client";
 import type { Disk, DriveManager } from "flydrive";
