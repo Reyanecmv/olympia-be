@@ -25,6 +25,7 @@ async function loadActionsRecursively(
   const entries = await readdir(dir, { withFileTypes: true });
   const actionPromises = entries.map(async (entry) => {
     const fullPath = join(dir, entry.name);
+    console.log('fullPath', fullPath);
     if (entry.isDirectory()) {
       await loadActionsRecursively(fastify, fullPath);
       return;
