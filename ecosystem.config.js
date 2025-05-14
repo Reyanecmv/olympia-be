@@ -2,7 +2,7 @@
 module.exports = {
     apps: [{
         name: "soap-api",                   // Application name
-        script: "./dist/app.js",            // Path to your application entry point
+        script: "./dist/src/app.js",            // Path to your application entry point
         instances: "max",                   // Use max CPU cores for cluster mode
         exec_mode: "cluster",               // Run in cluster mode
         watch: false,                       // Don't watch for file changes
