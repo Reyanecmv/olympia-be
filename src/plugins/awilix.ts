@@ -6,7 +6,6 @@ import fp from "fastify-plugin";
 import * as fs from "fs";
 import { fileURLToPath } from "node:url";
 import * as path from "path";
-import * as console from "node:console";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,7 +16,6 @@ async function registerServices(fastify: FastifyInstance) {
   const servicesDir = path.join(__dirname, "../services");
   const registrations: Record<string, any> = {};
   for (const file of fs.readdirSync(servicesDir)) {
-    console.log(file, "file");
     if (file.startsWith("base") || !file.endsWith(".service.js")) continue;
 
     const modulePath = path.join(servicesDir, file);
@@ -31,7 +29,6 @@ async function registerServices(fastify: FastifyInstance) {
 
       const serviceName = `${serviceClass.name.charAt(0).toLowerCase()}${serviceClass.name.slice(1)}`;
       registrations[serviceName] = asClass(serviceClass).singleton();
-      console.log(`##### service name: ${serviceName}`);
     }
     fastify.diContainer.register(registrations);
   }

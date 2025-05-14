@@ -30,6 +30,7 @@ async function loadActionsRecursively(
       return;
     }
 
+    console.log(entry.name)
     if (entry.name.startsWith("base") || !entry.name.endsWith(".action.js"))
       return;
 
@@ -45,6 +46,7 @@ async function loadActionsRecursively(
       }
 
       const actionName = ActionClass.name;
+      console.log('action name', actionName);
       const actionResolver = createActionResolver(ActionClass);
       actions.set(actionName, actionResolver);
 
