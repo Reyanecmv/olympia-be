@@ -1,4 +1,3 @@
-import { JWTToken } from "@app-types/auth/JWTToken.js";
 import { FastifyReply, FastifyRequest } from "fastify";
 
 export const authMiddleware = async (
@@ -6,8 +5,10 @@ export const authMiddleware = async (
   reply: FastifyReply,
 ) => {
   try {
-    const claims: JWTToken = await request.jwtVerify();
-    request.userId = claims.sub;
+    const passcode = request.headers['passCode'];
+    if(passcode === process.env.PASSCODE){
+      request.userId = request.headers['userId'] as string
+    }
   } catch (err) {
     return reply.status(401).send({ error: "Unauthorized" });
   }

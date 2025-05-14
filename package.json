@@ -1,5 +1,5 @@
 {
-  "name": "soap",
+  "name": "soap-api",
   "version": "1.0.0",
   "author": "Bogdan Petcu",
   "description": "A simple REST API that call other apis via soap",

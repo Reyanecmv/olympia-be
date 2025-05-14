@@ -1,5 +1,4 @@
 import type {
-  JWTToken,
   LoginRequest,
   RegisterRequest,
 } from "@app-types/auth/index.js";
@@ -68,60 +67,61 @@ export class AuthController {
     request: FastifyRequest<{ Body: RefreshRequest }>,
     reply: FastifyReply,
   ) {
-    const { refresh_token } = request.body;
+    // const { refresh_token } = request.body;
 
-    const claims = request.server.jwt.verify<JWTToken>(refresh_token);
+    // const claims = request.server.jwt.verify<JWTToken>(refresh_token);
 
-    const isRefreshTokenUsed = await request.server.redis.get(
-      `refresh:${claims.jti}`,
-    );
+    // const isRefreshTokenUsed = await request.server.redis.get(
+    //   `refresh:${claims.jti}`,
+    // );
 
-    if (isRefreshTokenUsed) {
-      return reply.status(400).send({ message: "Token already used" });
-    }
+    // if (isRefreshTokenUsed) {
+    //   return reply.status(400).send({ message: "Token already used" });
+    // }
 
-    const expiresIn = DateTime.now();
+    // const expiresIn = DateTime.now();
+    //
+    // const createId = init({
+    //   length: 32,
+    // });
 
-    const createId = init({
-      length: 32,
-    });
+    // const accessToken = await reply.jwtSign({
+    //   sub: claims.sub,
+    //   exp: expiresIn.plus({ day: 1 }).toUnixInteger(),
+    //   jti: createId(),
+    // });
+    // const refreshToken = await reply.jwtSign({
+    //   sub: claims.sub,
+    //   exp: expiresIn.plus({ day: 7 }).toUnixInteger(),
+    //   jti: createId(),
+    // });
 
-    const accessToken = await reply.jwtSign({
-      sub: claims.sub,
-      exp: expiresIn.plus({ day: 1 }).toUnixInteger(),
-      jti: createId(),
-    });
-    const refreshToken = await reply.jwtSign({
-      sub: claims.sub,
-      exp: expiresIn.plus({ day: 7 }).toUnixInteger(),
-      jti: createId(),
-    });
-
-    try {
-      await request.server.redis.set(
-        `refresh:${claims.jti}`,
-        JSON.stringify({ refreshed_at: DateTime.now() }),
-        "EX",
-        claims.exp,
-      );
-
-      reply.send({ access_token: accessToken, refresh_token: refreshToken });
-    } catch (error) {
-      reply
-        .status(400)
-        .send({ message: "An error has ocurred, please try again later" });
-    }
+    // try {
+    //   await request.server.redis.set(
+    //     `refresh:${claims.jti}`,
+    //     JSON.stringify({ refreshed_at: DateTime.now() }),
+    //     "EX",
+    //     claims.exp,
+    //   );
+    //
+    //   reply.send({ access_token: accessToken, refresh_token: refreshToken });
+    // } catch (error) {
+    //   reply
+    //     .status(400)
+    //     .send({ message: "An error has ocurred, please try again later" });
+    // }
+    return await reply.send({ message: "Logged out successfully" });
   }
 
   static async logout(request: FastifyRequest, reply: FastifyReply) {
-    const claims: JWTToken = await request.jwtVerify();
+    // const claims: JWTToken = await request.jwtVerify();
 
-    await request.server.redis.set(
-      claims.jti,
-      JSON.stringify({ sub: claims.sub, loggedOutAt: DateTime.now().toISO() }),
-      "EX",
-      claims.exp,
-    );
+    // await request.server.redis.set(
+    //   claims.jti,
+    //   JSON.stringify({ sub: claims.sub, loggedOutAt: DateTime.now().toISO() }),
+    //   "EX",
+    //   claims.exp,
+    // );
 
     return await reply.send({ message: "Logged out successfully" });
   }

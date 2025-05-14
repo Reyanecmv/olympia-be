@@ -22,13 +22,6 @@ export class HomeController {
       dbStatus = "down";
     }
 
-    try {
-      const pong = await request.server.redis.ping();
-      redisStatus = pong === "PONG" ? "connected" : "disconnected";
-    } catch (err) {
-      redisStatus = "disconnected";
-    }
-
     reply.send({
       status: "ok",
       uptime: process.uptime(),

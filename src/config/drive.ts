@@ -8,7 +8,7 @@ const driveConfig: DriveConfig = {
     : DriveDisks.Local,
   disks: {
     local: {
-      location: new URL("./../../uploads", import.meta.url),
+      location: new URL("./data", import.meta.url),
       visibility: "public",
     },
 

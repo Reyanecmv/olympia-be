@@ -2,7 +2,6 @@ import { AutoloadPluginOptions } from "@fastify/autoload";
 import type { UserService } from "@services/user.service.js";
 import type { ReservationService } from "@services/reservation.service.js";
 import { FastifyServerOptions } from "fastify";
-import { Client } from "soap";
 import type { PrismaClient } from "@prisma/client";
 import type { Disk, DriveManager } from "flydrive";
 import { Services } from "./drive.js";
@@ -50,7 +49,6 @@ declare module "@fastify/awilix" {
     reservationPaymentsService: ReservationPaymentsService;
     vehicleService: VehicleService;
     prismaClient: PrismaClient;
-    soapClient: Client;
     drive: DriveManager<Services>;
     disk: Disk;
     actions: Map<string, Action>;
