@@ -63,8 +63,8 @@ export default class CreateReservationAction
             TicketHandlingType: 0,
             PaymentType: 0,
             PaymentValue: params.paymentValue,
-            BookingTariffId: params.tariffId,
-            OverstayTariffId: params.overstayTariffId,
+            // BookingTariffId: params.tariffId,
+            // OverstayTariffId: params.overstayTariffId,
             LastName: params.customerLastName,
             FirstName: params.customerFirstName,
             Company: params.companyName,
@@ -93,7 +93,7 @@ export default class CreateReservationAction
       const response = await this.axios.post(axiosConfig.baseURL, xmlString, {
         headers: {
           "Content-Type": "text/xml; charset=utf-8",
-          SOAPAction: `"http://www.designa.de/insertPrebookingDataV31"`,
+          SOAPAction: "http://www.designa.de/insertPrebookingDataV31",
           Accept: "text/xml",
         },
       });
