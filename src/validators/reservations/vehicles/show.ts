@@ -2,7 +2,7 @@ export const showReservationVehicleSchema = {
   schema: {
     headers: {
       type: "object",
-      required: ["authorization"],
+      
       properties: {
         authorization: { type: "string" },
       },

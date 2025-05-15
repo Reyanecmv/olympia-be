@@ -2,7 +2,7 @@ export const destroyVehiclesSchema = {
   schema: {
     headers: {
       type: "object",
-      required: ["authorization"],
+      
       properties: {
         authorization: { type: "string" },
       },

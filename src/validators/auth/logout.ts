@@ -2,7 +2,6 @@ export const logoutValidationSchema = {
   schema: {
     headers: {
       type: "object",
-      required: ["authorization"],
       properties: {
         authorization: { type: "string" },
       },
