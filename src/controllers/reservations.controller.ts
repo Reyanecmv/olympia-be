@@ -79,12 +79,6 @@ export class ReservationsController {
       return reply.status(404).send({ message: "Reservation not found" });
     }
 
-    if (reservation.customerId !== request.userId) {
-      return reply
-        .status(403)
-        .send({ message: "You are not allowed to update this reservation" });
-    }
-
     const updatedReservation = await reservationService.update(
       request.params.id,
       request.body,
