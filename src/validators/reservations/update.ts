@@ -14,13 +14,6 @@ export const updateReservationSchema = {
         id: { type: "string" },
       },
     },
-    body: {
-      type: "object",
-      required: ["status"],
-      properties: {
-        status: { type: "string", enum: ["pending", "approved", "rejected"] },
-      },
-    },
     response: {
       200: {
         type: "object",
