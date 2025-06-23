@@ -141,11 +141,11 @@ export class ReservationsController {
 
     const reservation = await reservationService.fetchOne(request.params.id);
 
-    if (reservation?.customerId !== request.userId) {
-      return reply
-        .status(403)
-        .send({ message: "You are not allow to remove this reservation" });
-    }
+    // if (reservation?.customerId !== request.userId) {
+    //   return reply
+    //     .status(403)
+    //     .send({ message: "You are not allow to remove this reservation" });
+    // }
 
     if (!reservation) {
       return reply.status(404).send({ message: "Reservation not found" });

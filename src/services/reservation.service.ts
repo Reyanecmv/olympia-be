@@ -178,4 +178,17 @@ export class ReservationService extends BaseService {
       },
     });
   }
+
+  public async cancel(reservationId: string) {
+    const { prismaClient } = this.ioc;
+
+    return prismaClient.reservation.update({
+      where: {
+        id: reservationId,
+      },
+      data: {
+        status: "canceled",
+      },
+    });
+  }
 }

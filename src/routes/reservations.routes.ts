@@ -10,6 +10,7 @@ import {
   StoreReservationRequest,
 } from "@app-types/reservations/index.js";
 import {
+  cancelReservationSchema,
   createReservationSchema,
   deleteReservationSchema,
   indexReservationSchema,
@@ -17,6 +18,8 @@ import {
   updateReservationSchema,
 } from "@validators/reservations/index.js";
 import { UpdateReservationRequest } from "@app-types/reservations/UpdateReservationRequest.js";
+import { CancelReservationsController } from "@controllers/cancel-reservations.controller.js";
+import { CancelReservationRequest } from "@app-types/reservations/CancelReservationRequest.js";
 
 const reservations: FastifyPluginAsync = async (fastify): Promise<void> => {
   fastify.get<IndexReservationRequest>(
@@ -43,6 +46,11 @@ const reservations: FastifyPluginAsync = async (fastify): Promise<void> => {
     "/:id",
     { onRequest: authMiddleware, schema: deleteReservationSchema.schema },
     ReservationsController.destroy,
+  );
+  fastify.patch<CancelReservationRequest>(
+      "/:id/cancel",
+      { onRequest: authMiddleware, schema: cancelReservationSchema.schema },
+      CancelReservationsController.update,
   );
 };
 
