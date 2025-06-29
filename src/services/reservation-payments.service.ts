@@ -36,8 +36,6 @@ export class ReservationPaymentsService extends BaseService {
         },
       });
 
-      request.log.debug(`AICI BAAAAAAAAAAAAA ${res!.id}`);
-
     return await prismaClient.payment.create({
       data: {
         reservationId: res!.id,
