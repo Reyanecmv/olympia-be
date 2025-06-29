@@ -32,6 +32,8 @@ export class ReservationPaymentsService extends BaseService {
       where: { reservationId: reservationId }
     });
 
+    console.log(res!.id);
+
     return await prismaClient.payment.create({
       data: {
         reservationId: res!.id,
