@@ -29,7 +29,7 @@ export default class CreateSimplePaymentAction
   }) {
     const reservation = await this.prismaClient.reservation.findUnique({
       where: {
-        id: params.reservationId,
+        reservationId: params.reservationId,
       },
     });
     if (!reservation) {
