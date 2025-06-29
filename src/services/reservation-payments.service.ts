@@ -32,7 +32,7 @@ export class ReservationPaymentsService extends BaseService {
       where: { reservationId: reservationId }
     });
 
-    console.log('test AIIC', res!.id);
+    console.error("RESSSSSSSSS", res);
 
     return await prismaClient.payment.create({
       data: {
