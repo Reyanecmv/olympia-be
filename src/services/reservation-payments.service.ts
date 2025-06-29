@@ -27,11 +27,16 @@ export class ReservationPaymentsService extends BaseService {
     body: StoreReservationPaymentsRequest["Body"],
   ) {
     const { prismaClient } = this.ioc;
+
+    const res = await prismaClient.reservation.findUnique({
+      where: { reservationId: reservationId }
+    });
+
     return await prismaClient.payment.create({
       data: {
-        reservationId,
+        reservationId: res!.id,
         amount: Number(body.amount),
-        currency: "EUR",
+        currency: "RON",
       },
     });
   }
