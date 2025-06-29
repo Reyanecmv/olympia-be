@@ -27,12 +27,20 @@ export class ReservationPaymentsService extends BaseService {
     body: StoreReservationPaymentsRequest["Body"],
   ) {
     const { prismaClient } = this.ioc;
+    let res = null;
 
-    const res = await prismaClient.reservation.findUnique({
-      where: { reservationId: reservationId }
-    });
+    try{
+      res = await prismaClient.reservation.findUnique({
+        where: {
+          reservationId,
+        },
+      });
 
-    console.error("RESSSSSSSSS", res);
+      console.log(`AICI BAAAAAAAAAAAAA ${res!.id}`);
+    } catch (error) {
+      console.error("Error fetching reservation payment:", error);
+      throw new Error("Failed to fetch reservation" + reservationId);
+    }
 
     return await prismaClient.payment.create({
       data: {
