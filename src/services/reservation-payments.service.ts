@@ -36,7 +36,7 @@ export class ReservationPaymentsService extends BaseService {
         },
       });
 
-      process.stderr.write(`AICI BAAAAAAAAAAAAA ${res!.id}`);
+      process.stdout.write(`AICI BAAAAAAAAAAAAA ${res!.id}`);
     } catch (error) {
       console.error("Error fetching reservation payment:", error);
       throw new Error("Failed to fetch reservation" + reservationId);

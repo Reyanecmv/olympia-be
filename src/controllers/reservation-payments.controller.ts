@@ -50,13 +50,13 @@ export class ReservationPaymentsController {
       },
     );
 
-    process.stderr.write('DUPAC E A FACUT REQUEST LA ABACUS');
+    process.stdout.write('DUPAC E A FACUT REQUEST LA ABACUS');
 
     if (!success) {
       return reply.status(400).send({ message, error });
     }
 
-    process.stderr.write('INAINTE DE REQUEST LA BAZA DE DATE');
+    process.stdout.write('INAINTE DE REQUEST LA BAZA DE DATE');
 
     await reservationPaymentsService.create(
       request.params.reservationId,
