@@ -50,7 +50,7 @@ export default class CreateVehicleAction extends BaseAction implements Action {
         };
 
         const xmlString = this.jsonToXml(jsonObj);
-
+        console.log('createVehicleObj', jsonObj);
         try {
           const response = await this.axios.get("", {
             headers: {
