@@ -79,9 +79,13 @@ export class ReservationsController {
       return reply.status(404).send({ message: "Reservation not found" });
     }
 
+    const reservationToBeUpdated = {...reservation, ...request.body};
+
+    console.log("Updating reservation with data:", reservationToBeUpdated);
+
     const updatedReservation = await reservationService.update(
-      request.params.id,
-      request.body,
+        request.params.id,
+        reservationToBeUpdated,
     );
 
     const { success, message } = await request.server.executeAction(
