@@ -79,7 +79,16 @@ export class ReservationsController {
       return reply.status(404).send({ message: "Reservation not found" });
     }
 
-    const reservationToBeUpdated = {...reservation, ...request.body};
+    const {
+      id,
+      customerId,
+      paymentId,
+      createdAt,
+      updatedAt,
+      ...allowedFields
+    } = {...reservation, ...request.body};
+
+    const reservationToBeUpdated = allowedFields;
 
     console.log("Updating reservation with data:", reservationToBeUpdated);
 
