@@ -89,7 +89,7 @@ export class ReservationVehiclesController {
       });
     }
 
-    const result = await vehicleService.create(reservationId, request);
+    const result = await vehicleService.create(reservation.id, request);
 
     reply.send({ result });
   }
