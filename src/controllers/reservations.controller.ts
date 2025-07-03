@@ -84,11 +84,18 @@ export class ReservationsController {
       request.body,
     );
 
-    reply.send({
-      success: true,
-      message: "Reservation updated successfully",
-      data: updatedReservation,
-    });
+    const { success, message } = await request.server.executeAction(
+        "EditReservationAction",
+        { ...request.body, reservationId: request.params.id },
+    );
+
+    if (success) {
+      return reply.send({
+        success: true,
+        message,
+        data: updatedReservation,
+      });
+    }
   }
 
   public static async store(
