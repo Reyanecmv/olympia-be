@@ -59,7 +59,7 @@ export default class EditReservationAction
         };
 
         const xmlString = this.jsonToXml(jsonObj);
-
+        console.log("XML Request String:", xmlString);
         try {
             const response = await this.axios.post(``, xmlString, {
                 headers: {
