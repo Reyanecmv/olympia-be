@@ -85,6 +85,7 @@ export class ReservationsController {
       paymentId,
       createdAt,
       updatedAt,
+      licensePlate,
       ...allowedFields
     } = {...reservation, ...request.body};
 
