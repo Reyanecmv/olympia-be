@@ -120,7 +120,7 @@ export default class GetReservationAction extends BaseAction implements Action {
       reservationId: prebookingEntry["@_ReservationID"],
       transactionType: prebookingEntry._TransactionType,
       carparkCode: prebookingEntry.CarparkCode,
-      state: this.hasArrivalDate(prebookingEntry.State),
+      state: this.hasArrivalDate(prebookingEntry),
       vehicleInfo: {
         registrationNumber: prebookingEntry.VehicleRegistrationNumber,
         identMedium: prebookingEntry.IdentMedium,
