@@ -74,6 +74,16 @@ export default class GetReservationAction extends BaseAction implements Action {
     }
   }
 
+  private hasArrivalDate(obj: any) {
+    const value = obj.ArrivalDate;
+    // If value is undefined or explicitly nil, return false
+    if (!value || value['@_xsi:nil'] === 'true') {
+      return false;
+    }
+    // Otherwise, ArrivalDate exists and is populated
+    return true;
+  }
+
   /**
    * Get user-friendly error message based on error code
    */
@@ -109,7 +119,7 @@ export default class GetReservationAction extends BaseAction implements Action {
       reservationId: prebookingEntry["@_ReservationID"],
       transactionType: prebookingEntry._TransactionType,
       carparkCode: prebookingEntry.CarparkCode,
-      state: prebookingEntry.State,
+      state: this.hasArrivalDate(prebookingEntry.State),
       vehicleInfo: {
         registrationNumber: prebookingEntry.VehicleRegistrationNumber,
         identMedium: prebookingEntry.IdentMedium,
@@ -134,6 +144,7 @@ export default class GetReservationAction extends BaseAction implements Action {
     return reservationInfo;
   }
 }
+
 
 declare module "@app-types/app.js" {
   interface ActionTypes {
