@@ -51,7 +51,7 @@ export class ReservationsController {
 
     const reservation = await reservationService.fetchOne(request.params.id);
 
-    if (!reservation) {
+    if (reservation) {
       const reservationInfo = await request.server.executeAction(
         "GetReservationAction",
         request.params.id,
@@ -62,10 +62,7 @@ export class ReservationsController {
       return reply.send(reservationInfo);
     }
 
-    reply.send({
-      success: true,
-      data: reservation,
-    });
+    return reply.status(404).send({ message: "Reservation not found" });
   }
 
   public static async update(
