@@ -75,6 +75,7 @@ export default class GetReservationAction extends BaseAction implements Action {
   }
 
   private hasArrivalDate(obj: any) {
+    console.log('AICI', obj);
     const value = obj.ArrivalDate;
     // If value is undefined or explicitly nil, return false
     if (!value || value['@_xsi:nil'] === 'true') {
