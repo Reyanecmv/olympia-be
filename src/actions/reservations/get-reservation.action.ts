@@ -103,6 +103,8 @@ export default class GetReservationAction extends BaseAction implements Action {
       data["soap:Envelope"]["soap:Body"].getPrebookingsResponse
         .getPrebookingsResult.DesignaPrebookingEntry;
 
+    console.error(prebookingEntry);
+
     const reservationInfo = {
       reservationId: prebookingEntry["@_ReservationID"],
       transactionType: prebookingEntry._TransactionType,
