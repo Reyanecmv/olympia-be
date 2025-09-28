@@ -126,6 +126,8 @@ export default class GetReservationAction extends BaseAction implements Action {
       },
     };
 
+    console.log(reservationInfo);
+
     return reservationInfo;
   }
 }
