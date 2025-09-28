@@ -56,6 +56,9 @@ export class ReservationsController {
         "GetReservationAction",
         request.params.id,
       );
+
+      console.log("Reservation info from action:", reservationInfo);
+
       return reply.send(reservationInfo);
     }
 
