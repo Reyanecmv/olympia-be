@@ -39,6 +39,24 @@ export default class CreateReservationAction
       SequenceResult[]
     >`SELECT nextval('emi_sequence') as reservationId`;
 
+    // Calculate Latest Check-Out (ForcedCloseOffset) based on paid days
+    const checkInTime = new Date(params.startDateTime).getTime();
+    const checkOutTime = new Date(params.endDateTime).getTime();
+    const actualHours = (checkOutTime - checkInTime) / (1000 * 60 * 60); // milliseconds to hours
+
+    let forcedCloseOffset = 0; // Default for stays <= 5 hours
+    const graceExit = 15; // 15 minutes grace period after deadline
+
+    if (actualHours > 24) {
+      // Multiple days: ceil(hours/24) * 24 hours = paid days
+      const paidDays = Math.ceil(actualHours / 24);
+      forcedCloseOffset = paidDays * 24 * 60; // Convert to minutes
+    } else if (actualHours > 5 && actualHours <= 24) {
+      // 6-24 hours: pay full day (24 hours)
+      forcedCloseOffset = 24 * 60; // 1440 minutes
+    }
+    // If actualHours <= 5: forcedCloseOffset stays 0 (no overpayment concept applies)
+
     const jsonObj = {
       "soap:Envelope": {
         "@_xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
@@ -59,7 +77,7 @@ export default class CreateReservationAction
             ValidUntil: params.endDateTime,
             GraceEntry: 0,
             LatestEntryOffset: 0,
-            ForcedCloseOffset: 0,
+            ForcedCloseOffset: forcedCloseOffset, // Latest exit without overpayment (in minutes)
             TicketHandlingType: 0,
             PaymentType: 0,
             PaymentValue: params.paymentValue,
@@ -80,7 +98,7 @@ export default class CreateReservationAction
             MinutesOfValidity: 0,
             MaxIssueAmount: 1,
             Remark: "test",
-            GraceExit: 0,
+            GraceExit: graceExit, // Grace period after deadline (in minutes)
           },
         },
       },
