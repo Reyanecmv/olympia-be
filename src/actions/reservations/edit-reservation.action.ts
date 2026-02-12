@@ -32,22 +32,27 @@ export default class EditReservationAction
     public async execute(
         params: EditReservationActionarams,
     ): Promise<EditReservationActionResult> {
-        // Calculate Latest Check-Out (GraceExit) based on paid days
+        // Calculate latest checkout based on paid days
         const checkInTime = new Date(params.startDate).getTime();
         const checkOutTime = new Date(params.endDate).getTime();
         const actualHours = (checkOutTime - checkInTime) / (1000 * 60 * 60); // milliseconds to hours
 
-        let graceExit = 0; // Default for stays <= 5 hours (latest exit without overpayment in minutes)
+        let forcedCloseOffset = 0; // ForcedCloseOffset: minutes from check-in to latest paid checkout
+        let graceExit = 0; // GraceExit: minutes from selected checkout to latest paid checkout
 
         if (actualHours > 24) {
             // Multiple days: ceil(hours/24) * 24 hours = paid days
             const paidDays = Math.ceil(actualHours / 24);
-            graceExit = paidDays * 24 * 60; // Convert to minutes
+            forcedCloseOffset = paidDays * 24 * 60; // Total minutes from check-in to latest checkout
+            const latestCheckoutTime = checkInTime + (paidDays * 24 * 60 * 60 * 1000); // milliseconds
+            graceExit = Math.round((latestCheckoutTime - checkOutTime) / (1000 * 60)); // Minutes from selected checkout to latest
         } else if (actualHours > 5 && actualHours <= 24) {
             // 6-24 hours: pay full day (24 hours)
-            graceExit = 24 * 60; // 1440 minutes
+            forcedCloseOffset = 24 * 60; // 1440 minutes from check-in
+            const latestCheckoutTime = checkInTime + (24 * 60 * 60 * 1000); // milliseconds
+            graceExit = Math.round((latestCheckoutTime - checkOutTime) / (1000 * 60)); // Minutes from selected checkout to latest
         }
-        // If actualHours <= 5: graceExit stays 0 (no overpayment concept applies)
+        // If actualHours <= 5: both stay 0 (no overpayment concept applies)
 
         const jsonObj = {
             "soap:Envelope": {
@@ -66,11 +71,11 @@ export default class EditReservationAction
                         ValidUntil: params.endDate,
                         GraceEntry: 0,
                         LatestEntryOffset: 0,
-                        ForcedCloseOffset: 0,
+                        ForcedCloseOffset: forcedCloseOffset, // Minutes from check-in to latest paid checkout
                         TicketHandlingType: 0,
                         PaymentType: 0,
                         PaymentValue: params.paymentValue,
-                        GraceExit: graceExit, // Latest exit without overpayment (in minutes)
+                        GraceExit: graceExit, // Minutes from selected checkout to latest paid checkout
                     },
                 },
             },
