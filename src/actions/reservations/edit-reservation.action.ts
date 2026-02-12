@@ -32,23 +32,22 @@ export default class EditReservationAction
     public async execute(
         params: EditReservationActionarams,
     ): Promise<EditReservationActionResult> {
-        // Calculate Latest Check-Out (ForcedCloseOffset) based on paid days
+        // Calculate Latest Check-Out (GraceExit) based on paid days
         const checkInTime = new Date(params.startDate).getTime();
         const checkOutTime = new Date(params.endDate).getTime();
         const actualHours = (checkOutTime - checkInTime) / (1000 * 60 * 60); // milliseconds to hours
 
-        let forcedCloseOffset = 0; // Default for stays <= 5 hours
-        const graceExit = 15; // 15 minutes grace period after deadline
+        let graceExit = 0; // Default for stays <= 5 hours (latest exit without overpayment in minutes)
 
         if (actualHours > 24) {
             // Multiple days: ceil(hours/24) * 24 hours = paid days
             const paidDays = Math.ceil(actualHours / 24);
-            forcedCloseOffset = paidDays * 24 * 60; // Convert to minutes
+            graceExit = paidDays * 24 * 60; // Convert to minutes
         } else if (actualHours > 5 && actualHours <= 24) {
             // 6-24 hours: pay full day (24 hours)
-            forcedCloseOffset = 24 * 60; // 1440 minutes
+            graceExit = 24 * 60; // 1440 minutes
         }
-        // If actualHours <= 5: forcedCloseOffset stays 0 (no overpayment concept applies)
+        // If actualHours <= 5: graceExit stays 0 (no overpayment concept applies)
 
         const jsonObj = {
             "soap:Envelope": {
@@ -67,11 +66,11 @@ export default class EditReservationAction
                         ValidUntil: params.endDate,
                         GraceEntry: 0,
                         LatestEntryOffset: 0,
-                        ForcedCloseOffset: forcedCloseOffset, // Latest exit without overpayment (in minutes)
+                        ForcedCloseOffset: 0,
                         TicketHandlingType: 0,
                         PaymentType: 0,
                         PaymentValue: params.paymentValue,
-                        GraceExit: graceExit, // Grace period after deadline (in minutes)
+                        GraceExit: graceExit, // Latest exit without overpayment (in minutes)
                     },
                 },
             },
